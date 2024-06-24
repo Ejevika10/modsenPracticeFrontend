@@ -27,11 +27,15 @@ a, p {
   margin-left: 50px;
   margin-right: 50px;
 }
+.profileBtn:hover{
+  color:#003636;
+}
 .link{
   margin: 10px;
   margin-left: 50px;
   margin-right: 50px;
   color: #003636;
+  font-size: 17px;
 }
 .disabled{
   pointer-events: none;
@@ -156,7 +160,7 @@ a, p {
   color: #ffffff;
   cursor: pointer;
 }
-.product_counter>button:hover{
+.product_counter>button:hover:enabled{
   color:#003636;
 }
 .details_description {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getProduct } from '../api/ProductService';
 
-const ProductDetails = ({}) => {
+const ProductDetails = ({isLoggedIn}) => {
     const [product, setProduct] = useState({
         name: '',
         description: '',
@@ -42,7 +42,7 @@ const ProductDetails = ({}) => {
                     <div class="number">
                         <input type="number" min="0" value="1" readonly/>
                     </div>
-                    <button type="submit">Add to cart</button>
+                    <button disabled={!isLoggedIn}>Add to cart</button>
                 </div>
             </div>
             <div className='details_description'>{product.description}</div>

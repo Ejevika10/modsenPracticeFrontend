@@ -1,7 +1,7 @@
 import React from 'react'
 import Product from './Product'
 
-const ProductList = ({data, currentPage, getAllProducts}) => {
+const ProductList = ({data, currentPage, getAllProducts, isLoggedIn}) => {
   return (
     <main className='main'>
         {data?.length === 0 && <div>No Products</div>}

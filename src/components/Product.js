@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Product = ({ product }) => {
+const Product = ({ isLoggedIn, product }) => {
   return (
     <Link to={`/products/${product.id}`} className='product_item'>
         <div className = 'product_item_wrapper'>

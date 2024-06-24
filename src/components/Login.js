@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from "react-router-dom";
 
 
-const Login = () => {
+const Login = ({handleLogin, handleRegister}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [login, setLogin] = useState('');
@@ -10,8 +10,14 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleAuthentication = () => {
-      navigate('/products');
+    {isLogin?
+      handleLogin(login, password)
+      :
+      handleRegister(email,login,password)
+    }
+    navigate('/products');
   };
+
   const setLoggedIn = () => {
       setIsLogin(!isLogin);
   };
