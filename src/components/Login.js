@@ -48,7 +48,7 @@ const Login = ({handleLogin, handleRegister}) => {
         />
         <input
           value={password}
-          onChangeText={(e) =>
+          onChange={(e) =>
             setPassword(e.target.value)}
           placeholder="Enter password"
           secureTextEntry
