@@ -5,42 +5,53 @@ import { useNavigate } from 'react-router-dom';
 import 'react-dropdown/style.css';
 import { getCategories } from '../api/CategoryService';
 
+
 const ProductList = ({products, currentPage, getAllProducts, isLoggedIn, userRole}) => {
   
   const [categories, setCategories] = useState([]); // Initialize as empty array
+  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  
   const getAllCategories = async () => {
     try {
-      const response = await getCategories(); // Wait for the promise to resolve
-      setCategories(response.data);
+      const response = await getCategories(); 
+      const categoriesWithAll = [...response.data, {id: -1, name: 'All' }]; 
+      setCategories(categoriesWithAll); 
       console.log(response.data);
+      
     } catch (error) {
       console.log(error);
     }
   };
-
+  const onChangeCategory = (newCategory) => {
+    setSelectedCategory(newCategory)
+  }
   const navigate = useNavigate();
   const handleCreateProduct = () => {
-    navigate('/products/change');
+    navigate('/products/add');
+  };
+  const handleWorkWithCategories = () => {
+    navigate('/categories');
   };
 
   useEffect(() => {
     getAllCategories(); // Fetch categories on component mount
   }, []); // Empty dependency array to run only once
 
-  const defaultOption = categories[0];
+  /*
+  <button className="dropdown_wrapper_button">Update category</button>
+          <button className="dropdown_wrapper_button">Delete category</button>
+          <button className='dropdown_wrapper_button bigBtn'>Add new category</button>
+        
+  */
 
-  console.log(categories);
-  console.log(isLoggedIn && "ADMIN" === userRole);
   return (
     <main className='main'>
       <div className="dropdown_wrapper">
         <p className='link'>Choose category:</p>
-        {categories?.length > 0 && <Dropdown className="dropdown" options={categories.map(category => ({ value: category.name, label: category.name }))} value={defaultOption.name} placeholder="Select an option" />}
+        {categories?.length > 0 && <Dropdown className="dropdown" options={categories.map(category => ({ value: category.name, label: category.name }))} value={selectedCategory} placeholder="Select an option" onChange={(newCategory) => onChangeCategory(newCategory)}/>}
         {(isLoggedIn && "ADMIN" === userRole) ?
         <>
-          <button className="dropdown_wrapper_button">Update category</button>
-          <button className="dropdown_wrapper_button">Delete category</button>
-          <button className='dropdown_wrapper_button bigBtn'>Add new category</button>
+          <button onClick={handleWorkWithCategories} className="dropdown_wrapper_button">Work with categories</button>
         </>
         :
         <></>

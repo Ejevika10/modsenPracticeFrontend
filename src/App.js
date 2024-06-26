@@ -9,6 +9,8 @@ import { Routes, Route, Navigate} from 'react-router-dom';
 import ProductDetails from './components/ProductDetails';
 import ProductChange from './components/ProductChange';
 import Login from './components/Login';
+import OrderList from './components/OrderList';
+import CategoryList from './components/CategoryList';
 
 function App() {
   const [products, setProducts] = useState({});  
@@ -27,6 +29,14 @@ function App() {
       console.log(error)
     }
   };
+  const updateProduct = async (product) => {
+    console.log("update");
+    console.log(product);
+  }
+  const createProduct = async (product) => {
+    console.log("create");
+    console.log(product);    
+  }
   const handleLogin = async (username, password) => {
     /*try {
       const response = await axios.post('http://localhost:8080/api/auth/login', {
@@ -79,7 +89,10 @@ function App() {
             <Route path='/' element={<Navigate to={'/products'} />} />
             <Route path="/products" element={<ProductList products = {products} currentPage={currentPage} getAllProducts={getAllProducts} isLoggedIn={isAuthenticated} userRole={"ADMIN"}/>} />
             <Route path="/products/:id" element={<ProductDetails isLoggedIn={isAuthenticated} />} />
-            <Route path="/products/change" element={<ProductChange isLoggedIn={isAuthenticated}/>} />
+            <Route path="/products/change/:id" element={<ProductChange isLoggedIn={isAuthenticated} handleAction={updateProduct}/>} />
+            <Route path="/products/add" element={<ProductChange isLoggedIn={isAuthenticated} handleAction={createProduct}/>} />
+            <Route path="/categories" element={<CategoryList />}/> 
+            <Route path="/orders" element={<OrderList userId={1}/>}/> 
             <Route path='/login' element={<Login handleLogin = {handleLogin} handleRegister={handleRegister}/>} />
           </Routes>
         </div>

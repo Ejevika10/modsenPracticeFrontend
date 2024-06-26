@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useParams,useNavigate, Link, createSearchParams } from 'react-router-dom';
+import { useParams,useNavigate, Link } from 'react-router-dom';
 import { getProduct } from '../api/ProductService';
+import img1 from '../images/picture.jpg';
 
 const ProductDetails = ({isLoggedIn, userRole}) => {
     const [product, setProduct] = useState({
@@ -9,12 +10,15 @@ const ProductDetails = ({isLoggedIn, userRole}) => {
         category: '',
         price: '',
     });
-    const [num, setNum] = useState(1);
+    const [quantity, setQuantity] = useState(1); 
+    const handleQuantityChange = (event) => {
+        setQuantity(parseInt(event.target.value, 10));
+      }
     const { id } = useParams();
     const navigate = useNavigate();
 
     const handleUpdateProduct = () => {
-        navigate('/products/change',{product});
+        navigate(`/products/change/:${id}`, { state: { product } });
       };
     const fetchProduct = async (id) => {
         try {
@@ -35,7 +39,7 @@ const ProductDetails = ({isLoggedIn, userRole}) => {
         <Link to={'/products'} className='link'><i className='bi bi-arrow-left'></i> Back to list</Link>
         <div className='details'>
             <div className ='details_image'>
-                <img src="/images/picture.jpg" width="350" height="350" alt="" />
+                <img src={img1} width="350" height="350" alt="" />
             </div>
             <div className ='details_info'>
                 <div className ='details_info_first_line'>
@@ -46,7 +50,7 @@ const ProductDetails = ({isLoggedIn, userRole}) => {
                 {(!isLoggedIn || "USER" === userRole)?
                 <div class="product_counter">
                     <div class="number">
-                        <input type="number" min="0" value="1" readonly/>
+                        <input type="number" min="1" value={quantity} onChange={handleQuantityChange}/>
                     </div>
                     <button disabled={!isLoggedIn}>Add to cart</button>
                 </div>

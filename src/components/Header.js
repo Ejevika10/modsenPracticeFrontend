@@ -7,13 +7,16 @@ const Header = ({isLoggedIn, logoutHandler}) => {
   const onProfileBtnClick = () => {
     navigate('/login');
   };
+  const onOrdersBtnClick = () => {
+    navigate('/orders');
+  };
 
   return (
   <>
     <header className='header'>
       <div>
         {isLoggedIn 
-          ?<HiShoppingCart onClick={onProfileBtnClick} className='profileBtn' size={60}/>
+          ?<HiShoppingCart onClick={onOrdersBtnClick} className='profileBtn' size={60}/>
           :<></>
         }
         {isLoggedIn 

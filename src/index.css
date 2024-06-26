@@ -14,6 +14,10 @@ a, p {
 	text-decoration: none;
   color: black;
 }
+img{
+border-radius: 10px;
+box-shadow: 0 0 20px #b1b1b1;
+}
 .header{
   background-color:#00a7a7;
   height: 80px;
@@ -294,4 +298,101 @@ a, p {
 .loginText:hover {
   text-decoration: none;
   color:#003636;;
+}
+
+.order_list{
+  display:flex;
+  flex-direction: column;
+  padding-left:20px;
+  padding-right: 20px;
+}
+.order{
+  background-color:#ecf1f1;
+  border-radius: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding:20px;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.order_head{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+}
+.order_item{
+  background-color:#ffffff;
+  border-radius: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.order_item p{
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.order_item_icon{
+  background-color: #00a7a7;
+  color:#ffffff;
+  border-radius: 15px;
+  padding: 5px;
+}
+.order_item_icon:hover{
+  color:#003636;
+}
+.order_btn{
+  height: 40px;
+  width: 170px;
+  border-radius: 10px;
+  border: none;
+  background-color:#00a7a7;
+  text-align:center;
+  font-size: 17px;
+  color: #ffffff;
+  cursor: pointer;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.order_btn:hover{
+  color:#003636;
+}
+.quantity_input{
+  width: 85px;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  background-color:#ecf1f1;
+  font-size: 20px;
+}
+.quantity_input_wrapper{
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.order_product_name{
+  font-size: 25px;
+}
+.category_item{
+  background-color:#ecf1f1;
+  border-radius: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.category_item input{
+  height: 20px;
+  width: 350px;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #ffffff;
+  font-size: 15px;
 }
