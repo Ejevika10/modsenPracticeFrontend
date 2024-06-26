@@ -1,5 +1,7 @@
 import './App.css';
+import Cookies from 'js-cookie';
 
+import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { getProducts } from './api/ProductService';
 import { getUser } from './api/UserService';
@@ -9,15 +11,19 @@ import { Routes, Route, Navigate} from 'react-router-dom';
 import ProductDetails from './components/ProductDetails';
 import ProductChange from './components/ProductChange';
 import Login from './components/Login';
+import Registration from "./components/Registration";
 import OrderList from './components/OrderList';
 import CategoryList from './components/CategoryList';
+import {fetchWithAuth, logout} from "./api/auth";
 
 function App() {
-  const [products, setProducts] = useState({});  
+  const [products, setProducts] = useState({});
   const [currentPage, setCurrentPage] = useState(0);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
+  const [role, setRole] = useState(null);
   const [token, setToken] = useState(null);
+  const navigate = useNavigate();
 
   const getAllProducts = async (page = 0, size = 10) => {
     try {
@@ -35,34 +41,19 @@ function App() {
   }
   const createProduct = async (product) => {
     console.log("create");
-    console.log(product);    
+    console.log(product);
   }
-  const handleLogin = async (username, password) => {
-    /*try {
-      const response = await axios.post('http://localhost:8080/api/auth/login', {
-        username,
-        password,
-      });
-      setToken(response.data.token);
-      localStorage.setItem('token', response.data.token);
-      setIsAuthenticated(true);
-    } catch (error) {
-      console.error('Ошибка авторизации:', error);
-    }*/
-      console.log(username + " login " + password)
+  const handleAuthenticate = async (roles) => {
+      console.log(roles);
+      setRole(roles);
       setIsAuthenticated(true);
   };
-  const handleRegister = async (email, username, password) => {
-      console.log(username + " register " + password)
-      setIsAuthenticated(true);
-  }
 
-  const handleLogout = () => {
-    /*setToken(null);
-    localStorage.removeItem('token');*/
-    console.log("logouts")
-    setIsAuthenticated(false);
-  };
+    const handleLogout = async () => {
+        logout();
+        setIsAuthenticated(false);
+        navigate('/login');
+    };
 
   useEffect(async () => {
     try{
@@ -79,7 +70,7 @@ function App() {
     getAllProducts();
   }, []);
 
-            
+
   return (
     <>
       <Header isLoggedIn={isAuthenticated} logoutHandler={handleLogout}/>
@@ -87,17 +78,18 @@ function App() {
         <div>
           <Routes>
             <Route path='/' element={<Navigate to={'/products'} />} />
-            <Route path="/products" element={<ProductList products = {products} currentPage={currentPage} getAllProducts={getAllProducts} isLoggedIn={isAuthenticated} userRole={"ADMIN"}/>} />
+            <Route path="/products" element={<ProductList products = {products} currentPage={currentPage} getAllProducts={getAllProducts} isLoggedIn={isAuthenticated} userRole={Cookies.get("userRole")}/>} />
             <Route path="/products/:id" element={<ProductDetails isLoggedIn={isAuthenticated} />} />
             <Route path="/products/change/:id" element={<ProductChange isLoggedIn={isAuthenticated} handleAction={updateProduct}/>} />
             <Route path="/products/add" element={<ProductChange isLoggedIn={isAuthenticated} handleAction={createProduct}/>} />
-            <Route path="/categories" element={<CategoryList />}/> 
-            <Route path="/orders" element={<OrderList userId={1}/>}/> 
-            <Route path='/login' element={<Login handleLogin = {handleLogin} handleRegister={handleRegister}/>} />
+            <Route path="/categories" element={<CategoryList />}/>
+            <Route path="/orders" element={<OrderList userId={1}/>}/>
+            <Route path='/login' element={<Login handleAuthenticate={handleAuthenticate}/>} />
+            <Route path="/registration" element={<Registration/>}/>
           </Routes>
         </div>
       </main>
-      
+
     </>
   );
 }

@@ -282,11 +282,11 @@ box-shadow: 0 0 20px #b1b1b1;
 .loginBtn:hover{
   color:#003636;
 }
-.loginText{
+.toRegistration{
   font-size: 30px;
   color: #ffffff;
 }
-.loginText {
+.toRegistration {
   background: none;
   border: none;
   padding: 10px;
@@ -294,8 +294,69 @@ box-shadow: 0 0 20px #b1b1b1;
   cursor: pointer; 
   color:#00a7a7;
 }
+.toRegistration:hover {
+  text-decoration: none;
+  color:#003636;;
+}
 
-.loginText:hover {
+.registrationWrapper {
+  background-color: #44aeae;
+  position: absolute;
+  top: 80px;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.registrationWrapper>.link{
+  color: #ffffff;
+}
+.registrationForm {
+  background-color: #ffffff;
+  border-radius: 20px;
+  margin:auto;
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+}
+.registrationForm input{
+  height: 30px;
+  width: 350px;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #ecf1f1;
+  font-size: 15px;
+}
+.registrationBtn{
+  height: 50px;
+  width: 370px;
+  margin: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color:#00a7a7;
+  text-align:center;
+  font-size: 30px;
+  color: #ffffff;
+  cursor: pointer;
+}
+.registrationBtn:hover{
+  color:#003636;
+}
+.toLogin{
+  font-size: 30px;
+  color: #ffffff;
+}
+.toLogin {
+  background: none;
+  border: none;
+  padding: 10px;
+  font-size: 17px;
+  cursor: pointer;
+  color:#00a7a7;
+}
+.toLogin:hover {
   text-decoration: none;
   color:#003636;;
 }
