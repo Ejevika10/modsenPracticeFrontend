@@ -73,13 +73,13 @@ function App() {
 
   return (
     <>
-      <Header isLoggedIn={isAuthenticated} logoutHandler={handleLogout}/>
+      <Header isLoggedIn={false} logoutHandler={handleLogout}/>
       <main>
         <div>
           <Routes>
             <Route path='/' element={<Navigate to={'/products'} />} />
-            <Route path="/products" element={<ProductList products = {products} currentPage={currentPage} getAllProducts={getAllProducts} isLoggedIn={isAuthenticated} userRole={Cookies.get("userRole")}/>} />
-            <Route path="/products/:id" element={<ProductDetails isLoggedIn={isAuthenticated} />} />
+            <Route path="/products" element={<ProductList products = {products} currentPage={currentPage} getAllProducts={getAllProducts} isLoggedIn={true} userRole={"ADMIN"}/>} />
+            <Route path="/products/:id" element={<ProductDetails isLoggedIn={true} userRole={"ADMIN"} />} />
             <Route path="/products/change/:id" element={<ProductChange isLoggedIn={isAuthenticated} handleAction={updateProduct}/>} />
             <Route path="/products/add" element={<ProductChange isLoggedIn={isAuthenticated} handleAction={createProduct}/>} />
             <Route path="/categories" element={<CategoryList />}/>
@@ -89,7 +89,6 @@ function App() {
           </Routes>
         </div>
       </main>
-
     </>
   );
 }

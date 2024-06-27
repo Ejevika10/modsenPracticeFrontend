@@ -104,8 +104,7 @@ const Registration = () => {
                 <button className="toLogin" onClick={goToLogin}>{'Already have an account? Login now'}</button>
             </div>
         </div>
-    )
-        ;
+    );
 };
 
 export default Registration;
