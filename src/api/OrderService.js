@@ -1,27 +1,101 @@
-export async function getOrders(userId) {
-    const mockOrders = [
-        { id: 1, userId: 1, orderItems: [{id: 1, product:{ id: 1, name: 'Product 1', 
-            description: 'Dinner is a family meal. We usually get together in the evening when my parents come back from work. My mother is an excellent cook and I really like all the dishes she makes. We usually eat some fish or meat with vegetables or porridge for dinner. ', 
-            category: 'drink',
-            price: 10.99 }, quantityOfProducts: 3}, {id: 2, product:{ id: 1, name: 'Product 1', 
-                description: 'Dinner is a family meal. We usually get together in the evening when my parents come back from work. My mother is an excellent cook and I really like all the dishes she makes. We usually eat some fish or meat with vegetables or porridge for dinner. ', 
-                category: 'drink',
-                price: 10.99 }, quantityOfProducts: 3}]},
-            { id: 2, userId: 1, orderItems: [{id: 1, product:{ id: 1, name: 'Product 1', 
-                description: 'Dinner is a family meal. We usually get together in the evening when my parents come back from work. My mother is an excellent cook and I really like all the dishes she makes. We usually eat some fish or meat with vegetables or porridge for dinner. ', 
-                category: 'drink',
-                price: 10.99 }, quantityOfProducts: 2}]},
-                { id: 3, userId: 2, orderItems: [{id: 1, product:{ id: 1, name: 'Product 1', 
-                    description: 'Dinner is a family meal. We usually get together in the evening when my parents come back from work. My mother is an excellent cook and I really like all the dishes she makes. We usually eat some fish or meat with vegetables or porridge for dinner. ', 
-                    category: 'drink',
-                    price: 10.99 }, quantityOfProducts: 1}]}
-      ];
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    mockOrders.map(order => console.log(order.userId));
-    const filteredOrders = mockOrders.filter(order => order.userId === userId);;
-    console.log(userId);
-    console.log(filteredOrders);
-    return {
-        data: mockOrders,
-    };
-}
+import { fetchWithAuth } from '../api/auth';
+const API_URL_ORDERS = 'http://localhost:8080/api/orders';
+
+export const getOrders = async () => {
+    try {
+        const response = await fetchWithAuth(API_URL_ORDERS);
+
+        if (!response.ok) {
+            throw new Error(`Error fetching orders: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        throw error;
+    }
+};
+
+export const getOrder = async (orderId) => {
+    const url = `${API_URL_ORDERS}/${orderId}`;
+
+    try {
+        const response = await fetchWithAuth(url);
+
+        if (!response.ok) {
+            throw new Error(`Error fetching order by ID: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching order by ID:', error);
+        throw error;
+    }
+};
+
+export const createOrder = async (order) => {
+    try {
+        const response = await fetchWithAuth(API_URL_ORDERS, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(order)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error adding order: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error adding order:', error);
+        throw error;
+    }
+};
+
+export const updateOrderById = async (orderId, order) => {
+    const url = `${API_URL_ORDERS}/${orderId}`;
+
+    try {
+        const response = await fetchWithAuth(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(order)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error updating order: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error updating order:', error);
+        throw error;
+    }
+};
+
+export const deleteOrderById = async (orderId) => {
+    const url = `${API_URL_ORDERS}/${orderId}`;
+
+    try {
+        const response = await fetchWithAuth(url, {
+            method: 'DELETE'
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error deleting order: ${response.statusText}`);
+        }
+
+        return response;
+    } catch (error) {
+        console.error('Error deleting order:', error);
+        throw error;
+    }
+};
