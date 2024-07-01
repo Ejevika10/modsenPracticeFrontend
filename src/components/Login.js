@@ -5,9 +5,38 @@ import Cookies from "js-cookie";
 const Login = ({handleAuthenticate}) => {
   const [password, setPassword] = useState('');
   const [login, setLogin] = useState('');
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!login) {
+      newErrors.login = 'Login is required';
+    } else if (!/^[a-zA-Z0-9._-]+$/.test(login)) {
+      newErrors.login = 'Login contains invalid characters';
+    } else if (login.length < 8 || login.length > 20) {
+      newErrors.login = 'Login must be 8-20 characters long';
+    }
+
+    if (!password) {
+      newErrors.password = 'Password is required';
+    } else if (!/^[a-zA-Z0-9!@#$%^&*(),.?":{}|<>+-]+$/.test(password))  {
+      newErrors.password = 'Password contains invalid characters';
+    } else if (password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+
   const handleAuthentication = async () => {
+    if (!validateForm()) {
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:8080/api/auth/login', {
         method: 'POST',
@@ -60,13 +89,15 @@ const Login = ({handleAuthenticate}) => {
           placeholder="Enter login"
           autoCapitalize="none"
         />
+        {errors.login && <p className="error">{errors.login}</p>}
         <input
           type="password"
           value={password}
           onChange={(e) =>
             setPassword(e.target.value)}
           placeholder="Enter password"
-        />  
+        />
+        {errors.password && <p className="error">{errors.password}</p>}
         <button className="loginBtn" onClick={handleAuthentication}>Login</button>
         <button className="toRegistration" onClick={goToRegistration}>{'Don\'t have any account? Register now'}</button>
       </div>
