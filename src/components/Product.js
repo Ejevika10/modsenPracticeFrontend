@@ -12,7 +12,7 @@ const Product = ({ isLoggedIn, product }) => {
             <div className ='product_item_details'>
               <div className ='product_item_first_line'>
                 <p className ='product_item_name'>{product.name.substring(0,15)}</p>
-                <p className ='product_item_category'>{product.category}</p>
+                <p className ='product_item_category'>{product.category.name}</p>
               </div>
                 <p className ='product_item_price'>{product.price}$</p>
             </div>

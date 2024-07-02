@@ -91,9 +91,11 @@ const ProductChange = ({isLoggedIn, userRole, handleAction}) => {
                         setName(e.target.value)}
                     placeholder="Enter new name"
                 />
+
                 {errors.name && <p className="error">{errors.name}</p>}
                 <input
                     value={category}
+
                     onChange={(e) =>
                         setCategory(e.target.value)}
                     placeholder="Enter new category"

@@ -28,7 +28,7 @@ const OrderItem = ({orderItem}) => {
   return (
     <div className='order_item'>
         <p className='order_product_name'>{orderItem.product.name}</p>
-        <p>{orderItem.product.category}</p>
+        <p>{orderItem.product.category.name}</p>
         <p className='order_product_name' >{orderItem.product.price}$</p>
         <div className='quantity_input_wrapper'>
           <input className='quantity_input' type="number" min="1" value={quantity} onChange={handleQuantityChange}/>

@@ -1,24 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { getOrders } from '../api/OrderService'
+import { getOrders, getOrdersByUser } from '../api/OrderService'
+
 import { useParams,useNavigate, Link } from 'react-router-dom';
 import Order from './Order'
 
-const OrderList = (userId) => {
+const OrderList = ({userId, userRole}) => {
     
     const [orders, setOrders] = useState([]); 
+    
     const getAllOrders = async (userId) => {
+      console.log(userId);
+      console.log(userRole);
+      if("ADMIN" === userRole){
+        console.log("ADMIN");
         try {
-          const response = await getOrders(userId); 
-          setOrders(response.data); 
-          console.log(response.data);
+          const response = await getOrders(); 
+          setOrders(response); 
+          console.log(response);
         } catch (error) {
           console.log(error);
         }
-      };
+      }
+      else{
+        console.log("CUSTOMER");
+        try {
+          const response = await getOrdersByUser(userId); 
+          setOrders(response); 
+          console.log(response);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
     useEffect(() => {
-        getAllOrders(userId); // Fetch categories on component mount
-    }, []); // Empty dependency array to run only once
-
+        getAllOrders(userId); 
+    }, []); 
 
   return (
     <main className='main'>

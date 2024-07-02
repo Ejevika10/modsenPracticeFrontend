@@ -1,46 +1,102 @@
-import axios from "axios";
-const API_URL = 'http://localhost:8080/api/categories';
+import { fetchWithAuth } from '../api/auth'
+const API_URL_CATEGORIES = 'http://localhost:8080/api/categories';
 
-export async function saveCategory(category) {
-    return await axios.post(API_URL,category);
-}
+export const getCategories = async () => {
+    try {
+        const response = await fetchWithAuth(API_URL_CATEGORIES);
 
-/*export async function getCategories(page = 0, size = 10) {
-    return await axios.get(`${API_URL}?page=${page}&size=${size}`);
-}*/
+        if (!response.ok) {
+            throw new Error(`Error fetching categories: ${response.statusText}`);
+        }
 
-export async function getCategories() {
-    const mockCategories = [
-        { id: 1, name: 'drink'},
-        { id: 2, name: 'food'},
-        { id: 3, name: 'food5'},
-      ];
-    await new Promise((resolve) => setTimeout(resolve, 500));
+        const data = await response.json();
+        console.log(data);
+        return data;
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+        throw error;
+    }
+};
 
-    return {
-        data: mockCategories,
-    };
-}
+export const getCategory = async (categoryId) => {
+    const url = `${API_URL_CATEGORIES}/${categoryId}`;
 
-/*export async function getCategory(id) {
-    return await axios.get(`${API_URL}/${id}`);
-}*/
+    try {
+        const response = await fetchWithAuth(url);
 
-export async function getCategory(id) {
-    const mockCategories = [
-        { id: 1, name: 'drink'},
-        { id: 2, name: 'food'},
-      ];
-      
-    await new Promise((resolve) => setTimeout(resolve, 50));
+        if (!response.ok) {
+            throw new Error(`Error fetching category by ID: ${response.statusText}`);
+        }
 
-    return mockCategories[id];
-}
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching category by ID:', error);
+        throw error;
+    }
+};
 
-export async function updateCategory(category) {
-    return await axios.post(API_URL, category);
-}
+export const createCategory = async (category) => {
+    try {
+        const response = await fetchWithAuth(API_URL_CATEGORIES, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(category)
+        });
 
-export async function deleteCategory(id) {
-    return await axios.delete(`${API_URL}/${id}`);
-}
+        if (!response.ok) {
+            throw new Error(`Error adding category: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error adding category:', error);
+        throw error;
+    }
+};
+
+export const updateCategoryById = async (categoryId, category) => {
+    const url = `${API_URL_CATEGORIES}/${categoryId}`;
+
+    try {
+        const response = await fetchWithAuth(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(category)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error updating category: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error updating category:', error);
+        throw error;
+    }
+};
+
+export const deleteCategoryById = async (categoryId) => {
+    const url = `${API_URL_CATEGORIES}/${categoryId}`;
+
+    try {
+        const response = await fetchWithAuth(url, {
+            method: 'DELETE'
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error deleting category: ${response.statusText}`);
+        }
+
+        return response;
+    } catch (error) {
+        console.error('Error deleting category:', error);
+        throw error;
+    }
+};

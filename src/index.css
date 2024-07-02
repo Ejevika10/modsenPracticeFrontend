@@ -25,6 +25,13 @@ box-shadow: 0 0 20px #b1b1b1;
   flex-direction: row;
   justify-content: space-between;
 }
+.header p{
+  color:#ffffff;
+  font-size: 40px;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 50px;
+}
 .profileBtn{
   color: #ffffff;
   margin: 10px;

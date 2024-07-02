@@ -30,6 +30,7 @@ const ProductDetails = ({isLoggedIn, userRole}) => {
         }
     };
     useEffect(() => {
+        console.log(userRole);
         fetchProduct(id);
     }, []);
     
@@ -44,10 +45,10 @@ const ProductDetails = ({isLoggedIn, userRole}) => {
             <div className ='details_info'>
                 <div className ='details_info_first_line'>
                     <p className ='details_info_name'>{product.name.substring(0,15)}</p>
-                    <p className ='details_info_category'>{product.category}</p>
+                    <p className ='details_info_category'>{product.category.name}</p>
                 </div>
                 <p className ='details_info_price'>{product.price}$</p>
-                {(!isLoggedIn || "USER" === userRole)?
+                {(!isLoggedIn || "CUSTOMER" === userRole)?
                 <div class="product_counter">
                     <div class="number">
                         <input type="number" min="1" value={quantity} onChange={handleQuantityChange}/>

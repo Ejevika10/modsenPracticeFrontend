@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import Cookies from "js-cookie";
+import { getUserByLogin } from '../api/UserService';
 
 const Login = ({handleAuthenticate}) => {
   const [password, setPassword] = useState('');
@@ -60,13 +61,19 @@ const Login = ({handleAuthenticate}) => {
       const refreshTokenData = JSON.parse(atob(refreshToken.split('.')[1]));
 
       const roles = accessTokenData.roles;
-
+      
       Cookies.set('accessToken', accessToken, {expires: new Date(accessTokenData.exp * 1000)});
       Cookies.set('refreshToken', refreshToken, {expires: new Date(refreshTokenData.exp * 1000)});
       Cookies.set('userRole', roles);
+      console.log(accessTokenData);
+      
+      const sub = accessTokenData.sub;
+      
+      console.log(sub);
+      const user = await getUserByLogin(sub);
+      console.log(user);
 
-      //needs refactor idk
-      handleAuthenticate(roles);
+      handleAuthenticate(roles, user);
       navigate("/products");
     } catch (error) {
       console.error('Error during login:', error);
