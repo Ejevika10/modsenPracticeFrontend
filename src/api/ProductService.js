@@ -8,8 +8,8 @@ export const getProducts = async () => {
         if (!response.ok) {
             throw new Error(`Error fetching products: ${response.statusText}`);
         }
-
         const data = await response.json();
+        console.log(data);
         return data;
     } catch (error) {
         console.error('Error fetching products:', error);

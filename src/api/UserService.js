@@ -34,6 +34,23 @@ export const getUser = async (userId) => {
         throw error;
     }
 };
+export const getUserByLogin = async (userLogin) => {
+    const url = `${API_URL_USERS}/login/${userLogin}`;
+
+    try {
+        const response = await fetchWithAuth(url);
+
+        if (!response.ok) {
+            throw new Error(`Error fetching user by login: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching user by login:', error);
+        throw error;
+    }
+};
 
 export const createUser = async (user) => {
     try {

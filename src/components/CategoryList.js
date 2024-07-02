@@ -10,8 +10,8 @@ const CategoryList = () => {
   const getAllCategories = async () => {
     try {
         const response = await getCategories(); 
-        setCategories(response.data); 
-        console.log(response.data);
+        setCategories(response); 
+        console.log(response);
     } catch (error) {
         console.log(error);
     }
@@ -20,8 +20,6 @@ const CategoryList = () => {
     getAllCategories(); 
   }, []); 
 
-
-
   return (
     <main className='main'>
         <Link to={'/products'} className='link'><i className='bi bi-arrow-left'></i> Back to list</Link>
@@ -29,7 +27,6 @@ const CategoryList = () => {
         <ul className='order_list'>
             {categories?.length > 0 && categories.map(category => <Category category = {category}/>)}
             <hr/>
-
             <div className='category_item'>
                 <div className='order_head'>
                     <input 

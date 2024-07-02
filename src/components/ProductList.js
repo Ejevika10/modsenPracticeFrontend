@@ -14,9 +14,9 @@ const ProductList = ({products, currentPage, getAllProducts, isLoggedIn, userRol
   const getAllCategories = async () => {
     try {
       const response = await getCategories(); 
-      const categoriesWithAll = [...response.data, {id: -1, name: 'All' }]; 
+      const categoriesWithAll = [...response, {id: -1, name: 'All' }]; 
       setCategories(categoriesWithAll); 
-      console.log(response.data);
+      console.log(response);
       
     } catch (error) {
       console.log(error);

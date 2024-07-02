@@ -14,6 +14,7 @@ const Header = ({isLoggedIn, logoutHandler}) => {
   return (
   <>
     <header className='header'>
+      <p>Modsen shop</p>
       <div>
         {isLoggedIn 
           ?<HiShoppingCart onClick={onOrdersBtnClick} className='profileBtn' size={60}/>

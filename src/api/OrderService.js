@@ -16,6 +16,22 @@ export const getOrders = async () => {
         throw error;
     }
 };
+export const getOrdersByUser = async (userId) => {
+    const url = `${API_URL_ORDERS}/user/${userId}`;
+    try {
+        const response = await fetchWithAuth(url);
+
+        if (!response.ok) {
+            throw new Error(`Error fetching orders: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        throw error;
+    }
+};
 
 export const getOrder = async (orderId) => {
     const url = `${API_URL_ORDERS}/${orderId}`;

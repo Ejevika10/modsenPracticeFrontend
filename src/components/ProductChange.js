@@ -47,7 +47,7 @@ const ProductChange = ({isLoggedIn, userRole, handleAction}) => {
                     placeholder="Enter new name"
                 />
                 <input 
-                    value={category} 
+                    value={category.name} 
                     onChange={(e) =>
                         setCategory(e.target.value)}
                     placeholder="Enter new category"
