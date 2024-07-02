@@ -6,6 +6,7 @@ import Category from './Category';
 const CategoryList = () => {
   const [categories, setCategories] = useState([]); // Initialize as empty array
   const [newCategory, setName] = useState('');
+  const [errors, setErrors] = useState({});
 
   const getAllCategories = async () => {
     try {
@@ -18,9 +19,31 @@ const CategoryList = () => {
   };
   useEffect(() => {
     getAllCategories(); 
-  }, []); 
+  }, []);
 
-  return (
+  const validateForm = () => {
+        const newErrors = {};
+
+        if (!newCategory) {
+            newErrors.newCategory = 'Category is required';
+        } else if (!/^[a-zA-Z0-9\s]+$/
+            .test(newCategory)) {
+            newErrors.newCategory = 'Category contains invalid characters';
+        } else if (newCategory.length < 3 || newCategory.length > 100) {
+            newErrors.newCategory = 'Category must be 3-100 characters long';
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    function onClickAction() {
+        if (!validateForm()) {
+            return;
+        }
+    }
+
+    return (
     <main className='main'>
         <Link to={'/products'} className='link'><i className='bi bi-arrow-left'></i> Back to list</Link>
         {categories?.length === 0 && <div>No Categories</div>}
@@ -36,8 +59,9 @@ const CategoryList = () => {
                         placeholder="Enter new category name"
                     />
                     <div className='quantity_input_wrapper'>
-                    <button className='dropdown_wrapper_button'>Add new category</button>
+                    <button onClick={onClickAction} className='dropdown_wrapper_button'>Add new category</button>
                     </div>
+                    {errors.newCategory && <p className="error">{errors.newCategory}</p>}
                 </div>
             </div>
         </ul>
