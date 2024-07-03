@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams,useNavigate, Link } from 'react-router-dom';
-import { getCategories } from '../api/CategoryService';
+import { getCategories, createCategory } from '../api/CategoryService';
 import Category from './Category';
 
 const CategoryList = () => {
@@ -37,10 +37,12 @@ const CategoryList = () => {
         return Object.keys(newErrors).length === 0;
     };
 
-    function onClickAction() {
+    const onClickAction = async () => {
         if (!validateForm()) {
             return;
         }
+        const response = await createCategory({name: newCategory});
+        console.log(response);
     }
 
     return (

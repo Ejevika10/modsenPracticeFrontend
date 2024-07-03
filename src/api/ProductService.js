@@ -57,9 +57,10 @@ export const createProduct = async (product) => {
     }
 };
 
-export const updateProductById = async (productId, product) => {
+export const updateProductById = async (product) => {
+    const productId = product.id;
     const url = `${API_URL_PRODUCTS}/${productId}`;
-
+    console.log(product);
     try {
         const response = await fetchWithAuth(url, {
             method: 'PUT',
@@ -74,6 +75,7 @@ export const updateProductById = async (productId, product) => {
         }
 
         const data = await response.json();
+        console.log(data);
         return data;
     } catch (error) {
         console.error('Error updating product:', error);

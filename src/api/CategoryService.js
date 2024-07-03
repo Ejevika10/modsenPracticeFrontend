@@ -37,6 +37,7 @@ export const getCategory = async (categoryId) => {
 };
 
 export const createCategory = async (category) => {
+    console.log(category);
     try {
         const response = await fetchWithAuth(API_URL_CATEGORIES, {
             method: 'POST',
@@ -59,6 +60,8 @@ export const createCategory = async (category) => {
 };
 
 export const updateCategoryById = async (categoryId, category) => {
+    console.log(categoryId);
+    console.log(category);
     const url = `${API_URL_CATEGORIES}/${categoryId}`;
 
     try {

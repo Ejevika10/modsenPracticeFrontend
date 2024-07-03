@@ -15,9 +15,12 @@ import Registration from "./components/Registration";
 import OrderList from './components/OrderList';
 import CategoryList from './components/CategoryList';
 import {fetchWithAuth, logout} from "./api/auth";
+import { createProduct, updateProductById } from './api/ProductService';
+import { getCategories } from './api/CategoryService';
 
 function App() {
-  const [products, setProducts] = useState({});
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]); // Initialize as empty array
   const [currentPage, setCurrentPage] = useState(0);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [role, setRole] = useState("");
@@ -36,14 +39,16 @@ function App() {
       console.log(error)
     }
   };
-  const updateProduct = async (product) => {
-    console.log("update");
-    console.log(product);
-  }
-  const createProduct = async (product) => {
-    console.log("create");
-    console.log(product);
-  }
+  const getAllCategories = async () => {
+    try {
+      const response = await getCategories(); 
+      setCategories(response); 
+      console.log(response);
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleAuthenticate = (roles, user) => {
       console.log(roles[0]);
       setRole(roles[0]);
@@ -73,6 +78,7 @@ function App() {
       console.error(error);
     }
     getAllProducts();
+    getAllCategories();
   }, []);
 
 
@@ -83,10 +89,10 @@ function App() {
         <div>
           <Routes>
             <Route path='/' element={<Navigate to={'/products'} />} />
-            <Route path="/products" element={<ProductList products = {products} currentPage={currentPage} getAllProducts={getAllProducts} isLoggedIn={isAuthenticated} userRole={role}/>} />
-            <Route path="/products/:id" element={<ProductDetails isLoggedIn={isAuthenticated} userRole={role} />} />
-            <Route path="/products/change/:id" element={<ProductChange isLoggedIn={isAuthenticated} handleAction={updateProduct}/>} />
-            <Route path="/products/add" element={<ProductChange isLoggedIn={isAuthenticated} handleAction={createProduct}/>} />
+            <Route path="/products" element={<ProductList products = {products} categories={categories} currentPage={currentPage} getAllProducts={getAllProducts} isLoggedIn={isAuthenticated} userRole={role}/>} />
+            <Route path="/products/:id" element={<ProductDetails isLoggedIn={isAuthenticated} userRole={role} user={user}/>} />
+            <Route path="/products/change/:id" element={<ProductChange categories={categories} isLoggedIn={isAuthenticated} handleAction={updateProductById}/>} />
+            <Route path="/products/add" element={<ProductChange categories={categories} isLoggedIn={isAuthenticated} handleAction={createProduct}/>} />
             <Route path="/categories" element={<CategoryList />}/>
             <Route path="/orders" element={<OrderList userId={userId} userRole={role}/>}/>
             <Route path='/login' element={<Login handleAuthenticate={handleAuthenticate}/>} />

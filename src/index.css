@@ -87,6 +87,18 @@ box-shadow: 0 0 20px #b1b1b1;
 .dropdown_wrapper_button:hover:enabled{
   color:#003636;
 }
+.dropdown{
+  border-radius: 20px;
+  width: 200px;
+  height: 50px;
+}
+.Dropdown-control{
+  border-radius: 10px !important;
+  width: 200px;
+  height: 40px;
+  color: #000000;
+  font-size: 15px;
+}
 .bigBtn{
   width: 500px;
   margin: auto;
@@ -95,10 +107,6 @@ box-shadow: 0 0 20px #b1b1b1;
   width: 350px;
   height: 50px;
   margin: auto;
-}
-.dropdown{
-  border-radius: 20px;
-  width: 200px;
 }
 .product_item {
 	width: 215px;
@@ -161,11 +169,20 @@ box-shadow: 0 0 20px #b1b1b1;
 .details_info_change {
 	text-align: center;
 }
-.details_info_change>input{
+.details_info_change>input {
   height: 30px;
   width: 350px;
   margin: 10px;
   padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #ffffff;
+  font-size: 15px;
+}
+.details_info_change>.dropdown{
+  height: 40px;
+  margin: 10px;
+  margin: auto;
   border-radius: 10px;
   border: none;
   background-color: #ffffff;

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { HiOutlineTrash } from "react-icons/hi";
+import { updateCategoryById, deleteCategoryById } from '../api/CategoryService';
 
 const Category = ({category}) => {
     const [name, setName] = useState(category.name);
@@ -21,10 +22,16 @@ const Category = ({category}) => {
         return Object.keys(newErrors).length === 0;
     };
 
-    function onClickAction() {
+    function onUpdateClickAction() {
         if (!validateForm()) {
             return;
         }
+        else{
+            updateCategoryById(category.id, {name:name});
+        }
+    }
+    function onDeleteClickAction() {
+        deleteCategoryById(category.id);
     }
 
   return (
@@ -37,11 +44,11 @@ const Category = ({category}) => {
                 placeholder="Enter new category name"
             />
             <div className='quantity_input_wrapper'>
-            <button onClick={onClickAction}  className='dropdown_wrapper_button'>Update category</button>
+            <button onClick={onUpdateClickAction}  className='dropdown_wrapper_button'>Update category</button>
             </div>
             {errors.name && <p className="error">{errors.name}</p>}
         </div>
-        <HiOutlineTrash className='order_item_icon' size={50}/>
+        <HiOutlineTrash onClick={onDeleteClickAction} className='order_item_icon' size={50}/>
     </div>
   )
 }
