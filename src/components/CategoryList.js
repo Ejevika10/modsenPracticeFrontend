@@ -2,18 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { useParams,useNavigate, Link } from 'react-router-dom';
 import { getCategories, createCategory } from '../api/CategoryService';
 import Category from './Category';
+import ErrorFallback from './Error'
 
 const CategoryList = () => {
   const [categories, setCategories] = useState([]); // Initialize as empty array
   const [newCategory, setName] = useState('');
   const [errors, setErrors] = useState({});
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+
   const getAllCategories = async () => {
     try {
         const response = await getCategories(); 
         setCategories(response); 
         console.log(response);
     } catch (error) {
+        setError(error);
         console.log(error);
     }
   };
@@ -41,11 +45,19 @@ const CategoryList = () => {
         if (!validateForm()) {
             return;
         }
-        const response = await createCategory({name: newCategory});
-        console.log(response);
-        navigate(0);
+        try {
+            const response = await createCategory({name: newCategory});
+            console.log(response);
+            navigate(0);
+        } catch(error) {
+            setError(error);
+            console.log(error.message);
+        }
     }
-
+    
+    if(error){
+        return <ErrorFallback error={error}/>
+    }
     return (
     <main className='main'>
         <Link to={'/products'} className='link'><i className='bi bi-arrow-left'></i> Back to list</Link>

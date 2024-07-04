@@ -3,6 +3,7 @@ import { useParams,useNavigate, Link } from 'react-router-dom';
 import { getProduct, deleteProductById } from '../api/ProductService';
 import { createOrderItem } from '../api/OrderItemService';
 import { createOrder } from '../api/OrderService';
+import ErrorFallback from './Error'
 import img1 from '../images/picture.jpg';
 
 const ProductDetails = ({isLoggedIn, userRole, user}) => {
@@ -17,30 +18,41 @@ const ProductDetails = ({isLoggedIn, userRole, user}) => {
         setQuantity(parseInt(event.target.value, 10));
       }
     const { id } = useParams();
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     const handleUpdateProduct = () => {
         navigate(`/products/change/:${id}`, { state: { product } });
     };
     const handleCreateOrder = async () => {
-        const response = await createOrderItem({quantityOfProducts: quantity, product:product})
-        console.log(response);
-        const response2 = await createOrder({user:user, orderItems:[response]});
-        console.log(response2);    
+        try {
+            const response = await createOrderItem({quantityOfProducts: quantity, product:product})
+            console.log(response);
+            const response2 = await createOrder({user:user, orderItems:[response]});
+            console.log(response2);  
+        } catch(error) {
+            setError(error);
+            console.log(error.message);
+        }  
     };
-
     const handleDeleteProduct = async () => {
-        const response = await deleteProductById(product.id);
-        console.log(response);
-        navigate(`/products`);
+        try {
+            const response = await deleteProductById(product.id);
+            console.log(response);
+            navigate(`/products`);
+        } catch(error) {
+            setError(error);
+            console.log(error.message);
+        }    
     };
     const fetchProduct = async (id) => {
         try {
-        const response = await getProduct(id);
-        setProduct(response);
-        console.log(response);
+            const response = await getProduct(id);
+            setProduct(response);
+            console.log(response);
         } catch(error) {
-        console.log(error)
+            setError(error);
+            console.log(error.message);
         }
     };
     useEffect(() => {
@@ -48,6 +60,9 @@ const ProductDetails = ({isLoggedIn, userRole, user}) => {
         fetchProduct(id);
     }, []);
     
+    if(error){
+        return <ErrorFallback error={error}/>
+    }
 
   return (
     <div className='detailsWrapper'>

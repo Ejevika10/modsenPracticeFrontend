@@ -493,3 +493,30 @@ box-shadow: 0 0 20px #b1b1b1;
   background-color: #ffffff;
   font-size: 15px;
 }
+.errorWrapper{
+  height: 100px;
+  margin: auto;
+  margin-top: 70px;
+}
+.errorMsg{
+  color:#ffffff;
+  font-size: 40px;
+  margin:auto;
+  text-align: center;
+}
+.errorInfoMsgWrapper{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin:auto;
+}
+.errorInfoMsg{
+  color:#ffffff;
+  font-size: 25px;
+  margin:auto;
+  padding: 15px;
+}
+.errorImg{
+  color: #ffffff;
+  margin: auto;
+}
