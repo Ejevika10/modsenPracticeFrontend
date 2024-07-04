@@ -26,7 +26,7 @@ const ProductChange = ({handleAction}) => {
         setId(product.id);
         setName(product.name);
         setDescription(product.description);
-        setSelectedCategory(product.category.name);
+        setSelectedCategory({label: product.category.name, value: product.category.id});
         setPrice(product.price);
     };
     const getAllCategories = async () => {
@@ -61,7 +61,7 @@ const ProductChange = ({handleAction}) => {
         }
         if (!price) {
             newErrors.price = 'Price is required';
-        } else if (!/^0-9+(\.0-9{1,2})?$/
+        } else if (!/^\d+(\.\d{1,2})?$/
             .test(price))  {
             newErrors.password = 'Price contains invalid characters';
         }
@@ -79,6 +79,7 @@ const ProductChange = ({handleAction}) => {
 
     const onClickAction = async() => {
         if (!validateForm()) {
+            console.log('not valid');
             return;
         }
         try {

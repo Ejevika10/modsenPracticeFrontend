@@ -7,7 +7,7 @@ const Registration = () => {
     const [password, setPassword] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [gender, setGender] = useState('');
+    const [gender, setGender] = useState("Male");
     const [dateOfBirth, setDateOfBirth] = useState('');
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
@@ -70,8 +70,6 @@ const Registration = () => {
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
-
-
     const handleRegister = async () => {
         if (!validateForm()) {
             return;
@@ -134,13 +132,24 @@ const Registration = () => {
                             placeholder="Last Name"
                         />
                         {errors.lastName && <p className="error">{errors.lastName}</p>}
-                        <input
-                            type="text"
-                            value={gender}
-                            onChange={(e) =>
-                                setGender(e.target.value)}
-                            placeholder="Gender"
-                        />
+                        <div className='radioBtn'>
+                            <div className='radioBtn'>
+                                <input type="radio" name="radio" value="Male"
+                                checked={gender === 'Male' ? true : false}
+                                onChange={(e) =>
+                                    setGender(e.target.value)} 
+                                />
+                                <p>Male</p>
+                            </div>
+                            <div className='radioBtn'>
+                                <input type="radio" name="radio" value="Female"
+                                checked={gender === 'Female' ? true : false}
+                                onChange={(e) =>
+                                    setGender(e.target.value)}  
+                                />
+                                <p>Female</p>
+                            </div>
+                        </div>
                         {errors.gender && <p className="error">{errors.gender}</p>}
                         <input
                             type="date"

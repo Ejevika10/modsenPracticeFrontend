@@ -53,6 +53,7 @@ export const getProduct = async (productId) => {
 
 export const createProduct = async (product) => {
     try {
+        console.log('create');
         const response = await fetchWithAuth(API_URL_PRODUCTS, {
             method: 'POST',
             headers: {
@@ -74,6 +75,7 @@ export const createProduct = async (product) => {
 };
 
 export const updateProductById = async (product) => {
+    console.log('update');
     const productId = product.id;
     const url = `${API_URL_PRODUCTS}/${productId}`;
     console.log(product);

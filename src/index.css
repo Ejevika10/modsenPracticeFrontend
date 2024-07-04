@@ -520,3 +520,10 @@ box-shadow: 0 0 20px #b1b1b1;
   color: #ffffff;
   margin: auto;
 }
+.radioBtn{
+  display: flex;
+  flex-direction: row;
+  width: 150px;
+  padding-top:5px;
+  padding-bottom: 4px;
+}
