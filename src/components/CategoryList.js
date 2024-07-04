@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams,useNavigate, Link } from 'react-router-dom';
-import { getCategories } from '../api/CategoryService';
+import { getCategories, createCategory } from '../api/CategoryService';
 import Category from './Category';
 
 const CategoryList = () => {
   const [categories, setCategories] = useState([]); // Initialize as empty array
   const [newCategory, setName] = useState('');
   const [errors, setErrors] = useState({});
-
+  const navigate = useNavigate();
   const getAllCategories = async () => {
     try {
         const response = await getCategories(); 
@@ -37,10 +37,13 @@ const CategoryList = () => {
         return Object.keys(newErrors).length === 0;
     };
 
-    function onClickAction() {
+    const onClickAction = async () => {
         if (!validateForm()) {
             return;
         }
+        const response = await createCategory({name: newCategory});
+        console.log(response);
+        navigate(0);
     }
 
     return (
