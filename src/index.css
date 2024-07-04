@@ -343,6 +343,18 @@ box-shadow: 0 0 20px #b1b1b1;
   flex-direction: column;
   padding: 40px;
 }
+.registrationFormWrapper {
+  display: flex;
+  flex-direction: row;
+}
+.registrationForm_req{
+  display: flex;
+  flex-direction: column;
+}
+.registrationForm_info{
+  display: flex;
+  flex-direction: column;
+}
 .registrationForm input{
   height: 30px;
   width: 350px;

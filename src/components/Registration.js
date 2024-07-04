@@ -116,63 +116,69 @@ const Registration = () => {
         <div className="registrationWrapper">
             <Link to={'/products'} className='link'><i className='bi bi-arrow-left'></i> Back to list</Link>
             <div className="registrationForm">
-                <input
-                    type="email"
-                    value={email}
-                    onChange={(e) =>
-                        setEmail(e.target.value)}
-                    placeholder="Email"
-                />
-                {errors.email && <p className="error">{errors.email}</p>}
-                <input
-                    type="text"
-                    value={login}
-                    onChange={(e) =>
-                        setLogin(e.target.value)}
-                    placeholder="Login"
-                />
-                {errors.login && <p className="error">{errors.login}</p>}
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) =>
-                        setPassword(e.target.value)}
-                    placeholder="Password"
-                />
-                {errors.password && <p className="error">{errors.password}</p>}
-                <input
-                    type="text"
-                    value={firstName}
-                    onChange={(e) =>
-                        setFirstName(e.target.value)}
-                    placeholder="First Name"
-                />
-                {errors.firstName && <p className="error">{errors.firstName}</p>}
-                <input
-                    type="text"
-                    value={lastName}
-                    onChange={(e) =>
-                        setLastName(e.target.value)}
-                    placeholder="Last Name"
-                />
-                {errors.lastName && <p className="error">{errors.lastName}</p>}
-                <input
-                    type="text"
-                    value={gender}
-                    onChange={(e) =>
-                        setGender(e.target.value)}
-                    placeholder="Gender"
-                />
-                {errors.gender && <p className="error">{errors.gender}</p>}
-                <input
-                    type="date"
-                    value={dateOfBirth}
-                    onChange={(e) =>
-                        setDateOfBirth(e.target.value)}
-                    placeholder="Date of Birth"
-                />
-                {errors.dateOfBirth && <p className="error">{errors.dateOfBirth}</p>}
-                <button className="registrationBtn" onClick={handleRegister}>Registration</button>
+                <div className='registrationFormWrapper'>
+                    <div className='registrationForm_info'>
+                        <input
+                            type="text"
+                            value={firstName}
+                            onChange={(e) =>
+                                setFirstName(e.target.value)}
+                            placeholder="First Name"
+                        />
+                        {errors.firstName && <p className="error">{errors.firstName}</p>}
+                        <input
+                            type="text"
+                            value={lastName}
+                            onChange={(e) =>
+                                setLastName(e.target.value)}
+                            placeholder="Last Name"
+                        />
+                        {errors.lastName && <p className="error">{errors.lastName}</p>}
+                        <input
+                            type="text"
+                            value={gender}
+                            onChange={(e) =>
+                                setGender(e.target.value)}
+                            placeholder="Gender"
+                        />
+                        {errors.gender && <p className="error">{errors.gender}</p>}
+                        <input
+                            type="date"
+                            value={dateOfBirth}
+                            onChange={(e) =>
+                                setDateOfBirth(e.target.value)}
+                            placeholder="Date of Birth"
+                        />
+                        {errors.dateOfBirth && <p className="error">{errors.dateOfBirth}</p>}
+                    </div>
+                    <div className='registrationForm_req'>
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) =>
+                                setEmail(e.target.value)}
+                            placeholder="Email"
+                        />
+                        {errors.email && <p className="error">{errors.email}</p>}
+                        <input
+                            type="text"
+                            value={login}
+                            onChange={(e) =>
+                                setLogin(e.target.value)}
+                            placeholder="Login"
+                        />
+                        {errors.login && <p className="error">{errors.login}</p>}
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) =>
+                                setPassword(e.target.value)}
+                            placeholder="Password"
+                        />
+                        {errors.password && <p className="error">{errors.password}</p>}
+                        <button className="registrationBtn" onClick={handleRegister}>Registration</button>
+                    </div>
+                </div>
                 <button className="toLogin" onClick={goToLogin}>{'Already have an account? Login now'}</button>
             </div>
         </div>
