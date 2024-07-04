@@ -1,21 +1,21 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { HiOutlineTrash } from "react-icons/hi";
 import { deleteOrderItemById, updateOrderItemById } from '../api/OrderItemService';
 
 const OrderItem = ({orderItem}) => {
   const [quantity, setQuantity] = useState(parseInt(orderItem.quantityOfProducts));
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
   const handleQuantityChange = (event) => {
     setQuantity(parseInt(event.target.value, 10));
   }
 
     const validateForm = () => {
         const newErrors = {};
-
         if (!quantity) {
             newErrors.quantity = 'Quantity is required';
         }
-
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -26,10 +26,12 @@ const OrderItem = ({orderItem}) => {
       }
       const response = await updateOrderItemById(orderItem.id, {product:orderItem.product, quantityOfProducts:quantity});
       console.log(response);
+      navigate(0);
     }
     const onDeleteClickAction = async () => {
       const response = await deleteOrderItemById(orderItem.id);
       console.log(response);
+      navigate(0);
     }
 
   return (

@@ -56,7 +56,7 @@ const ProductChange = ({categories, isLoggedIn, userRole, handleAction}) => {
 
         if (!price) {
             newErrors.price = 'Price is required';
-        } else if (!/^\d+(\.\d{1,2})?$/
+        } else if (!/^0-9+(\.0-9{1,2})?$/
             .test(price))  {
             newErrors.password = 'Price contains invalid characters';
         }

@@ -65,15 +65,10 @@ const Login = ({handleAuthenticate}) => {
       Cookies.set('accessToken', accessToken, {expires: new Date(accessTokenData.exp * 1000)});
       Cookies.set('refreshToken', refreshToken, {expires: new Date(refreshTokenData.exp * 1000)});
       Cookies.set('userRole', roles);
-      console.log(accessTokenData);
-      
       const sub = accessTokenData.sub;
-      
-      console.log(sub);
       const user = await getUserByLogin(sub);
-      console.log(user);
-
-      handleAuthenticate(roles, user);
+      Cookies.set('user', JSON.stringify(user));
+      handleAuthenticate();
       navigate("/products");
     } catch (error) {
       console.error('Error during login:', error);

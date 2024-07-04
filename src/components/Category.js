@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import { HiOutlineTrash } from "react-icons/hi";
 import { updateCategoryById, deleteCategoryById } from '../api/CategoryService';
 
 const Category = ({category}) => {
     const [name, setName] = useState(category.name);
     const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
 
     const validateForm = () => {
         const newErrors = {};
@@ -30,8 +32,9 @@ const Category = ({category}) => {
             updateCategoryById(category.id, {name:name});
         }
     }
-    function onDeleteClickAction() {
-        deleteCategoryById(category.id);
+    const onDeleteClickAction = async() => {
+        const response = await deleteCategoryById(category.id);
+        navigate(0);
     }
 
   return (

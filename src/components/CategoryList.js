@@ -7,7 +7,7 @@ const CategoryList = () => {
   const [categories, setCategories] = useState([]); // Initialize as empty array
   const [newCategory, setName] = useState('');
   const [errors, setErrors] = useState({});
-
+  const navigate = useNavigate();
   const getAllCategories = async () => {
     try {
         const response = await getCategories(); 
@@ -43,6 +43,7 @@ const CategoryList = () => {
         }
         const response = await createCategory({name: newCategory});
         console.log(response);
+        navigate(0);
     }
 
     return (

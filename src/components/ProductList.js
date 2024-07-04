@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import Product from './Product'
+import { getProducts, getProductsByCategory } from '../api/ProductService';
+import { getCategories } from '../api/CategoryService';
 import Dropdown from 'react-dropdown';
 import { useNavigate } from 'react-router-dom';
 import 'react-dropdown/style.css';
 
-const ProductList = ({products,categories, currentPage, getAllProducts, isLoggedIn, userRole}) => {
-  const [categoriesWithAll, setCategoriesWithAll] = useState([]);
+const ProductList = ({ currentPage, isLoggedIn, userRole}) => {
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const onChangeCategory = (newCategory) => {
-    setSelectedCategory(newCategory)
+    setSelectedCategory(newCategory);
+    if(newCategory.value === -1){
+      getAllProducts();
+    } 
+    else{
+      getProductsByCategoryId(newCategory.value);
+    }
+    console.log(newCategory);
   }
   const navigate = useNavigate();
   const handleCreateProduct = () => {
@@ -17,17 +27,45 @@ const ProductList = ({products,categories, currentPage, getAllProducts, isLogged
   const handleWorkWithCategories = () => {
     navigate('/categories');
   };
-
+  const getAllProducts = async () => {
+    try {
+      const response = await getProducts();
+      setProducts(response);
+      console.log(response);
+    } catch(error) {
+      console.log(error)
+    }
+  };
+  const getProductsByCategoryId = async (categoryId) => {
+    try {
+      const response = await getProductsByCategory(categoryId);
+      setProducts(response);
+      console.log(response);
+    } catch(error) {
+      console.log(error)
+    }
+  }
+  const getAllCategories = async () => {
+    try {
+      const response = await getCategories(); 
+      const categoriesWithAll = [...response, {id: -1, name: 'All' }]; 
+      setCategories(categoriesWithAll); 
+      console.log(response);
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
-    const categoriesWithAll = [...categories, {id: -1, name: 'All' }]; 
-    setCategoriesWithAll(categoriesWithAll);
+    getAllProducts();
+    getAllCategories();
   }, []); 
 
   return (
     <main className='main'>
       <div className="dropdown_wrapper">
         <p className='link'>Choose category:</p>
-        {categories?.length > 0 && <Dropdown className='dropdown' options={categoriesWithAll.map(category => ({ value: category.name, label: category.name }))} value={selectedCategory} placeholder="Select an option" onChange={(newCategory) => onChangeCategory(newCategory)}/>}
+        {categories?.length > 0 && <Dropdown className='dropdown' options={categories.map(category => ({ value: category.id, label: category.name }))} value={selectedCategory} placeholder="Select an option" onChange={(newCategory) => onChangeCategory(newCategory)}/>}
         {(isLoggedIn && "ADMIN" === userRole) ?
         <>
           <button onClick={handleWorkWithCategories} className="dropdown_wrapper_button">Work with categories</button>

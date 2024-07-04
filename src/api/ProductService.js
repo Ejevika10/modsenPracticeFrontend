@@ -16,6 +16,22 @@ export const getProducts = async () => {
         throw error;
     }
 };
+export const getProductsByCategory = async (categoryId) => {
+    const url = `${API_URL_PRODUCTS}/category/${categoryId}`;
+    try {
+        const response = await fetchWithAuth(url);
+
+        if (!response.ok) {
+            throw new Error(`Error fetching products: ${response.statusText}`);
+        }
+        const data = await response.json();
+        console.log(data);
+        return data;
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        throw error;
+    }
+};
 
 export const getProduct = async (productId) => {
     const url = `${API_URL_PRODUCTS}/${productId}`;

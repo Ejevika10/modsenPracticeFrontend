@@ -9,7 +9,7 @@ const Order = ({order}) => {
   const handleDeleteOrder = async () => {
     const response = await deleteOrderById(order.id);
     console.log(response);
-    navigate(`/orders`);
+    navigate(0);
 };
 
   return (

@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { getOrders, getOrdersByUser } from '../api/OrderService'
-
-import { useParams,useNavigate, Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import { Link } from 'react-router-dom';
 import Order from './Order'
 
-const OrderList = ({userId, userRole}) => {
+const OrderList = () => {
     
     const [orders, setOrders] = useState([]); 
-    
-    const getAllOrders = async (userId) => {
-      console.log(userId);
-      console.log(userRole);
+    const [role, setRole] = useState("");
+    const [userId, setUserId] = useState();
+
+    const getAllOrders = async () => {
+      const userRole = Cookies.get('userRole');
+      setRole(userRole);
+
+      const storedUser = await JSON.parse(Cookies.get('user'));
+      if (storedUser) {
+        setUserId(storedUser.id);
+      }
       if("ADMIN" === userRole){
         console.log("ADMIN");
         try {
@@ -22,9 +29,8 @@ const OrderList = ({userId, userRole}) => {
         }
       }
       else{
-        console.log("CUSTOMER");
         try {
-          const response = await getOrdersByUser(userId); 
+          const response = await getOrdersByUser(storedUser.id); 
           setOrders(response); 
           console.log(response);
         } catch (error) {
@@ -33,7 +39,7 @@ const OrderList = ({userId, userRole}) => {
       }
     };
     useEffect(() => {
-        getAllOrders(userId); 
+      getAllOrders(); 
     }, []); 
 
   return (

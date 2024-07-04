@@ -64,6 +64,7 @@ const logout = () => {
     Cookies.remove('accessToken', { path: '/' });
     Cookies.remove('refreshToken', { path: '/' });
     Cookies.remove('userRole', { path: '/' });
+    Cookies.remove('user', { path: '/' });
 
     console.log('User logged out successfully');
 };
