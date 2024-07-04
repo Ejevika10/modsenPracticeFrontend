@@ -5,11 +5,13 @@ import { getCategories } from '../api/CategoryService';
 import Dropdown from 'react-dropdown';
 import { useNavigate } from 'react-router-dom';
 import 'react-dropdown/style.css';
+import ErrorFallback from './Error'
 
 const ProductList = ({ currentPage, isLoggedIn, userRole}) => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [error, setError] = useState(null);
   const onChangeCategory = (newCategory) => {
     setSelectedCategory(newCategory);
     if(newCategory.value === -1){
@@ -33,7 +35,8 @@ const ProductList = ({ currentPage, isLoggedIn, userRole}) => {
       setProducts(response);
       console.log(response);
     } catch(error) {
-      console.log(error)
+      console.log(error);
+      setError(error);
     }
   };
   const getProductsByCategoryId = async (categoryId) => {
@@ -42,7 +45,8 @@ const ProductList = ({ currentPage, isLoggedIn, userRole}) => {
       setProducts(response);
       console.log(response);
     } catch(error) {
-      console.log(error)
+      console.log(error);
+      setError(error);
     }
   }
   const getAllCategories = async () => {
@@ -51,9 +55,9 @@ const ProductList = ({ currentPage, isLoggedIn, userRole}) => {
       const categoriesWithAll = [...response, {id: -1, name: 'All' }]; 
       setCategories(categoriesWithAll); 
       console.log(response);
-      
     } catch (error) {
       console.log(error);
+      setError(error);
     }
   };
   useEffect(() => {
@@ -61,6 +65,9 @@ const ProductList = ({ currentPage, isLoggedIn, userRole}) => {
     getAllCategories();
   }, []); 
 
+  if(error){
+    return <ErrorFallback error={error}/>
+  }
   return (
     <main className='main'>
       <div className="dropdown_wrapper">

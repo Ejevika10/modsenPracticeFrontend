@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { HiOutlineTrash } from "react-icons/hi";
 import { deleteOrderItemById, updateOrderItemById } from '../api/OrderItemService';
+import ErrorFallback from './Error'
 
 const OrderItem = ({orderItem}) => {
   const [quantity, setQuantity] = useState(parseInt(orderItem.quantityOfProducts));
   const [errors, setErrors] = useState({});
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const handleQuantityChange = (event) => {
     setQuantity(parseInt(event.target.value, 10));
@@ -24,16 +26,31 @@ const OrderItem = ({orderItem}) => {
       if (!validateForm()) {
         return;
       }
-      const response = await updateOrderItemById(orderItem.id, {product:orderItem.product, quantityOfProducts:quantity});
-      console.log(response);
-      navigate(0);
-    }
-    const onDeleteClickAction = async () => {
-      const response = await deleteOrderItemById(orderItem.id);
-      console.log(response);
-      navigate(0);
+      try {
+        const response = await updateOrderItemById(orderItem.id, {product:orderItem.product, quantityOfProducts:quantity});
+        console.log(response);
+        navigate(0);
+      } catch(error) {
+        setError(error);
+        console.log(error.message);
+      }
     }
 
+    const onDeleteClickAction = async () => {
+      try {
+        const response = await deleteOrderItemById(orderItem.id);
+        console.log(response);
+        navigate(0);
+      } catch(error) {
+          setError(error);
+          console.log(error.message);
+      }
+    }
+
+    
+  if(error){
+    return <ErrorFallback error={error}/>
+  }
   return (
     <div className='order_item'>
         <p className='order_product_name'>{orderItem.product.name}</p>

@@ -3,12 +3,14 @@ import { getOrders, getOrdersByUser } from '../api/OrderService'
 import Cookies from 'js-cookie';
 import { Link } from 'react-router-dom';
 import Order from './Order'
+import ErrorFallback from './Error'
 
 const OrderList = () => {
     
     const [orders, setOrders] = useState([]); 
     const [role, setRole] = useState("");
     const [userId, setUserId] = useState();
+    const [error, setError] = useState(null);
 
     const getAllOrders = async () => {
       const userRole = Cookies.get('userRole');
@@ -18,6 +20,7 @@ const OrderList = () => {
       if (storedUser) {
         setUserId(storedUser.id);
       }
+      
       if("ADMIN" === userRole){
         console.log("ADMIN");
         try {
@@ -25,6 +28,7 @@ const OrderList = () => {
           setOrders(response); 
           console.log(response);
         } catch (error) {
+          setError(error);
           console.log(error);
         }
       }
@@ -34,6 +38,7 @@ const OrderList = () => {
           setOrders(response); 
           console.log(response);
         } catch (error) {
+          setError(error);
           console.log(error);
         }
       }
@@ -41,6 +46,11 @@ const OrderList = () => {
     useEffect(() => {
       getAllOrders(); 
     }, []); 
+
+
+  if(error){
+    return <ErrorFallback error={error}/>
+  }
 
   return (
     <main className='main'>

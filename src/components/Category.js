@@ -2,10 +2,12 @@ import React, { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HiOutlineTrash } from "react-icons/hi";
 import { updateCategoryById, deleteCategoryById } from '../api/CategoryService';
+import ErrorFallback from './Error'
 
 const Category = ({category}) => {
     const [name, setName] = useState(category.name);
     const [errors, setErrors] = useState({});
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     const validateForm = () => {
@@ -28,13 +30,20 @@ const Category = ({category}) => {
         if (!validateForm()) {
             return;
         }
-        else{
-            updateCategoryById(category.id, {name:name});
-        }
+        updateCategoryById(category.id, {name:name});
     }
     const onDeleteClickAction = async() => {
-        const response = await deleteCategoryById(category.id);
-        navigate(0);
+        try {
+            const response = await deleteCategoryById(category.id);
+            console.log(response);
+            navigate(0);
+        } catch(error) {
+            setError(error);
+            console.log(error.message);
+        }
+    }
+    if(error){
+        return <ErrorFallback error={error}/>
     }
 
   return (

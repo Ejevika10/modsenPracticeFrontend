@@ -343,6 +343,18 @@ box-shadow: 0 0 20px #b1b1b1;
   flex-direction: column;
   padding: 40px;
 }
+.registrationFormWrapper {
+  display: flex;
+  flex-direction: row;
+}
+.registrationForm_req{
+  display: flex;
+  flex-direction: column;
+}
+.registrationForm_info{
+  display: flex;
+  flex-direction: column;
+}
 .registrationForm input{
   height: 30px;
   width: 350px;
@@ -480,4 +492,38 @@ box-shadow: 0 0 20px #b1b1b1;
   border: none;
   background-color: #ffffff;
   font-size: 15px;
+}
+.errorWrapper{
+  height: 100px;
+  margin: auto;
+  margin-top: 70px;
+}
+.errorMsg{
+  color:#ffffff;
+  font-size: 40px;
+  margin:auto;
+  text-align: center;
+}
+.errorInfoMsgWrapper{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin:auto;
+}
+.errorInfoMsg{
+  color:#ffffff;
+  font-size: 25px;
+  margin:auto;
+  padding: 15px;
+}
+.errorImg{
+  color: #ffffff;
+  margin: auto;
+}
+.radioBtn{
+  display: flex;
+  flex-direction: row;
+  width: 150px;
+  padding-top:5px;
+  padding-bottom: 4px;
 }
